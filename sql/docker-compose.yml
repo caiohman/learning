@@ -1,0 +1,14 @@
+services:
+
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: caio
+      MYSQL_DATABASE: db
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/  
+    ports:  
+      - "3306:3306"
+
+# mysql -u root -p
+# use db;
