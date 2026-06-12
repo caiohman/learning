@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 struct Person {
     name: String,
     age: u8,
@@ -29,8 +31,6 @@ enum CarryableConcreteItem {
     Left,
     Right,
 }    
-use std::cell::RefCell;
-use std::sync::{Arc, RwLock};
 type Item = CarryableConcreteItem;
 
 const DIGEST_SIZE: usize = 3;
@@ -80,6 +80,66 @@ fn compute_digest(text: &str) {
     println!("{digest:?}");
 }
 
+// #![allow(dead_code)]
+
+#[derive(Debug)]
+/// An event in the elevator system that the controller must react to.
+enum Event {
+    PassengerButtonPressed(i32, DirectionVertical),
+    Car(Status),
+}
+
+/// A direction of travel.
+#[derive(Debug)]
+enum DirectionVertical {
+    Up,
+    Down,
+}
+
+#[derive(Debug)]
+enum Status {
+    Arrived{floor: i32},
+    Opened,
+    Closed,
+}
+
+/// The car has arrived on the given floor.
+fn car_arrived(floor: i32) -> Event {
+    Event::Car(Status::Arrived{floor: floor})
+}
+
+/// The car doors have opened.
+fn car_door_opened() -> Event {
+    Event::Car(Status::Opened)
+}
+
+/// The car doors have closed.
+fn car_door_closed() -> Event {
+    Event::Car(Status::Closed)
+}
+
+/// A directional button was pressed in an elevator lobby on the given floor.
+fn lobby_call_button_pressed(floor: i32, dir: DirectionVertical) -> Event {
+    Event::PassengerButtonPressed(floor, dir)
+}
+
+/// A floor button was pressed in the elevator car.
+fn car_floor_button_pressed(floor: i32) -> Event {
+    Event::PassengerButtonPressed(floor, DirectionVertical::Up)
+}
+
+fn elevator() {
+    println!("A ground floor passenger has pressed the up button: {:?}",
+        lobby_call_button_pressed(0, DirectionVertical::Up)
+    );
+    println!("The car has arrived on the ground floor: {:?}", car_arrived(0));
+    println!("The car door opened: {:?}", car_door_opened());
+    println!("A passenger has pressed the 3rd floor button: {:?}",
+        car_floor_button_pressed(3)
+    );
+    println!("The car door closed: {:?}", car_door_closed());
+    println!("The car has arrived on the 3rd floor: {:?}", car_arrived(3));
+}
 
 fn main() {
     nameds();
@@ -88,4 +148,5 @@ fn main() {
     enumb();
     compute_digest("Hello");
     stat();
+    elevator();
 }
