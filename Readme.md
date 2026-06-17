@@ -15,3 +15,5 @@
 - Assembly
 
 - Regex
+
+- Haskell
