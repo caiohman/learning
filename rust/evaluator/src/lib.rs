@@ -23,7 +23,9 @@ fn eval(e: Expression) -> i64 {
         Expression::Value(x) => v = x,
         Expression::Op{op, left, right} => v = match op {
                 Operation::Add => eval(*left) + eval(*right),
-                Operation::Sub => eval(*left) - eval(*right),                Operation::Mul => eval(*left) * eval(*right),                Operation::Div => eval(*left) / eval(*right),     
+                Operation::Sub => eval(*left) - eval(*right),
+                Operation::Mul => eval(*left) * eval(*right), 
+                Operation::Div => eval(*left) / eval(*right),     
             }
         ,
     };
