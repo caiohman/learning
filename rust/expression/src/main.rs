@@ -1,3 +1,5 @@
+use std::time::Duration;
+
 fn takes_tuple(tuple: (char, i32, bool)) {
     let _a = tuple.0;
     let _b = tuple.1;
@@ -68,11 +70,69 @@ fn destructuring() {
     }
 }
 
+// in order to run the last example, comment is needed
+// enum Result {
+//     Ok(i32),
+//     Err(String),
+// }
+//
+// fn divide_in_two(n : i32) -> Result{
+//     if n % 2 == 0 {
+//         Result::Ok(n / 2)
+//     } else {
+//         Result::Err(format!("cannot divide {n} into two equal parts"))
+//     }
+// }
+//
+// fn destructring_enums(){
+//     let n = 100;
+//     match divide_in_two(n) {
+//         Result::Ok(half) => println!("{n} - {half}"),
+//         Result::Err(msg) => println!("{msg}"),
+//     }
+// }
+//
+fn sleep_for(secs: f32) {
+    let result = Duration::try_from_secs_f32(secs);
+
+    if let Ok(duration) = result {
+        std::thread::sleep(duration);
+        println!("{duration:?}");
+    }
+}
+
+fn while_let() {
+    let mut name = String::from("aka");
+    while let Some(c) = name.pop() {
+        dbg!(c);
+    }
+}
+
+fn hex_or_die_trying(maybe_string: Option<String>) -> Result<u32, String> {
+    let Some(s) = maybe_string else {
+        return Err(String::from("got none"));
+    };
+    let Some(fbc) = s.chars().next() else {
+        return Err(String::from("got empty"));
+    };
+    let Some(d) = fbc.to_digit(16) else {
+        return Err(String::from("not hex digit"));
+    };
+
+    Ok(d)
+}
+
+
 fn main() {
     takes_tuple(('a', 777, true));
     takes_array([1, 2, 3]);
     matchingvalues();
     matchingvalues_t();
     mathingvalues_inner();
-    destructuring();
+    destructuring(); 
+    // destructring_enums();
+    sleep_for(-10.0);
+    sleep_for(0.8);
+    while_let();
+    println!("{:?}", hex_or_die_trying(Some(String::from("foo"))));
 }
