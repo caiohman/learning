@@ -17,7 +17,7 @@ struct VerbosityFilter {
 
 impl Logger for VerbosityFilter {
     fn log(&self, verbosity: u8, message: &str) {
-        if verbosity < self.max_verbosity {    
+        if verbosity <= self.max_verbosity {    
             self.inner.log(verbosity, message);     
         }
     }
