@@ -19,3 +19,7 @@
 - Haskell
 
 - Dart - Flutter
+
+- PHP
+
+- Kotlin

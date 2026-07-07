@@ -1,7 +1,7 @@
 <?php
 
 include "config.php";
+include "autoload.php";
+include "routes.php";
 
-$name = "Caio";
-echo "Hello, $name!\n";
-var_dump($name);
+
