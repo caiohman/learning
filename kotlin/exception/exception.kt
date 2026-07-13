@@ -10,7 +10,7 @@ fun exception(input: String) {
 fun main() {
 	val input = readln()
 	val number = try {
-		exception(input)
+		exception(input = input) //named parameters
 	} catch(e : Exception) {
 		println(e)
 	}
