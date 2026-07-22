@@ -11,13 +11,13 @@ impl Logger for StderrLogger {
     }
 }
 
-struct Filter<F> where F: Fn(u8, &str) -> bool{
-    inner: StderrLogger,
+struct Filter<E, F> where E: Logger, F: Fn(u8, &str) -> bool{
+    inner: E,
     func: F,
 }
 
-impl<F> Filter<F> where F: Fn(u8, &str) -> bool{
-    fn new(err: StderrLogger, func: F) -> Self {
+impl<E, F> Filter<E, F> where E: Logger, F: Fn(u8, &str) -> bool{
+    fn new(err: E, func: F) -> Self {
         Self {inner: err, func: func}
     }
 
